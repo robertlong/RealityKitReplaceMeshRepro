@@ -7,20 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9E601C9A2A96B3BE00A4CA94 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 9E601C992A96B3BE00A4CA94 /* RealityKitContent */; };
 		9E601C9C2A96B3BE00A4CA94 /* ReplaceMeshReproApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E601C9B2A96B3BE00A4CA94 /* ReplaceMeshReproApp.swift */; };
-		9E601C9E2A96B3BE00A4CA94 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E601C9D2A96B3BE00A4CA94 /* ContentView.swift */; };
-		9E601CA02A96B3BE00A4CA94 /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E601C9F2A96B3BE00A4CA94 /* ImmersiveView.swift */; };
 		9E601CA22A96B3C100A4CA94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E601CA12A96B3C100A4CA94 /* Assets.xcassets */; };
 		9E601CA52A96B3C100A4CA94 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E601CA42A96B3C100A4CA94 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9E601C942A96B3BE00A4CA94 /* ReplaceMeshRepro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReplaceMeshRepro.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9E601C982A96B3BE00A4CA94 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		9E601C9B2A96B3BE00A4CA94 /* ReplaceMeshReproApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplaceMeshReproApp.swift; sourceTree = "<group>"; };
-		9E601C9D2A96B3BE00A4CA94 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		9E601C9F2A96B3BE00A4CA94 /* ImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveView.swift; sourceTree = "<group>"; };
 		9E601CA12A96B3C100A4CA94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9E601CA42A96B3C100A4CA94 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -30,7 +24,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E601C9A2A96B3BE00A4CA94 /* RealityKitContent in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,8 +51,6 @@
 			isa = PBXGroup;
 			children = (
 				9E601C9B2A96B3BE00A4CA94 /* ReplaceMeshReproApp.swift */,
-				9E601C9D2A96B3BE00A4CA94 /* ContentView.swift */,
-				9E601C9F2A96B3BE00A4CA94 /* ImmersiveView.swift */,
 				9E601CA12A96B3C100A4CA94 /* Assets.xcassets */,
 				9E601CA32A96B3C100A4CA94 /* Preview Content */,
 			);
@@ -69,7 +60,6 @@
 		9E601C972A96B3BE00A4CA94 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				9E601C982A96B3BE00A4CA94 /* RealityKitContent */,
 			);
 			path = Packages;
 			sourceTree = "<group>";
@@ -99,7 +89,6 @@
 			);
 			name = ReplaceMeshRepro;
 			packageProductDependencies = (
-				9E601C992A96B3BE00A4CA94 /* RealityKitContent */,
 			);
 			productName = ReplaceMeshRepro;
 			productReference = 9E601C942A96B3BE00A4CA94 /* ReplaceMeshRepro.app */;
@@ -155,9 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E601C9E2A96B3BE00A4CA94 /* ContentView.swift in Sources */,
 				9E601C9C2A96B3BE00A4CA94 /* ReplaceMeshReproApp.swift in Sources */,
-				9E601CA02A96B3BE00A4CA94 /* ImmersiveView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,13 +344,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		9E601C992A96B3BE00A4CA94 /* RealityKitContent */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RealityKitContent;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9E601C8C2A96B3BE00A4CA94 /* Project object */;
 }
