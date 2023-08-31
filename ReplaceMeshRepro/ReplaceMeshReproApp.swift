@@ -29,12 +29,24 @@ struct ReplaceMeshReproApp: App {
                 entity.transform.translation = [0, 1, -2]
                 entity.components.set(InputTargetComponent(allowedInputTypes: .all))
                 entity.generateCollisionShapes(recursive: false)
+                entity.components.set(DynamicMeshComponent())
                 content.add(entity)
             }
             .gesture(TapGesture()
-                .targetedToEntity(where: !.has(DynamicMeshComponent.self))
+                .targetedToEntity(where: .has(DynamicMeshComponent.self))
                 .onEnded { value in
-                    value.entity.components.set(DynamicMeshComponent())
+                    switch DynamicMeshSystem.mode {
+                    case .vertexDataOnly:
+                        DynamicMeshSystem.mode = .generateOnly
+                    case .generateOnly:
+                        DynamicMeshSystem.mode = .generateAndReplace
+                    case .generateAndReplace:
+                        DynamicMeshSystem.mode = .generateAndReplaceAsync
+                    case .generateAndReplaceAsync:
+                        DynamicMeshSystem.mode = .vertexDataOnly
+                    }
+                    
+                    print("DynamicMeshSystemMode \(DynamicMeshSystem.mode)")
                 })
         }
     }
@@ -43,15 +55,15 @@ struct ReplaceMeshReproApp: App {
 class DynamicMeshComponent: Component {}
 
 class DynamicMeshSystem: System {
+    enum Mode {
+        case vertexDataOnly, generateOnly, generateAndReplace, generateAndReplaceAsync
+    }
     
     static let query = EntityQuery(where: .has(DynamicMeshComponent.self))
     
     // Modify to increase mesh complexity
-    static let divisions = 6
-    
-    // You can set this flag to disable replacing the mesh
-    // and focus only on generating a new MeshResource
-    static let onlyGenerateMesh = false
+    static let divisions = 50
+    static var mode: Mode = .vertexDataOnly
     
     var descriptor = MeshDescriptor()
     var positions: [SIMD3<Float>]
@@ -113,16 +125,24 @@ class DynamicMeshSystem: System {
             descriptor.normals = MeshBuffer(normals)
             descriptor.primitives = .triangles(indices)
             
-            if Self.onlyGenerateMesh {
+            switch Self.mode {
+            case .vertexDataOnly:
+                return
+            case .generateOnly:
                 // Just generate a new mesh without replacing the current mesh
                 // This narrows down the overhead of dynamic meshes to the .generate function
                 mesh = try! MeshResource.generate(from: [descriptor])
-            } else {
+            case .generateAndReplace:
                 // Generate and replace the current mesh
                 let mesh = try! MeshResource.generate(from: [descriptor])
                 try! model.mesh.replace(with: mesh.contents)
+            case .generateAndReplaceAsync:
+                Task {
+                    // Generate and replace the current mesh
+                    let mesh = try! await MeshResource(from: [descriptor])
+                    try! await model.mesh.replace(with: mesh.contents)
+                }
             }
-            
         }
     }
 }
