@@ -41,12 +41,17 @@ class DynamicMeshSystem: System {
     static let query = EntityQuery(where: .has(DynamicMeshComponent.self))
     
     // Modify to increase mesh complexity
-    static let divisions = 50
+    static let divisions = 6
+    
+    // You can set this flag to disable replacing the mesh
+    // and focus only on generating a new MeshResource
+    static let onlyGenerateMesh = false
     
     var descriptor = MeshDescriptor()
     var positions: [SIMD3<Float>]
     var normals: [SIMD3<Float>]
     var indices: [UInt32]
+    var mesh: MeshResource?
 
     required init(scene: RealityKit.Scene) {
         positions = Array(repeating: SIMD3<Float>(), count: (Self.divisions + 1) * (Self.divisions + 1))
@@ -95,13 +100,23 @@ class DynamicMeshSystem: System {
                 }
             }
             
+            // Rather than constructing new MeshBuffers every frame and generating a new MeshResource
+            // it would be nice to mutate an existing MeshBuffer as you would with a lower level
+            // graphics API
             descriptor.positions = MeshBuffer(positions)
             descriptor.normals = MeshBuffer(normals)
             descriptor.primitives = .triangles(indices)
             
-            let mesh = try! MeshResource.generate(from: [descriptor])
+            if Self.onlyGenerateMesh {
+                // Just generate a new mesh without replacing the current mesh
+                // This narrows down the overhead of dynamic meshes to the .generate function
+                mesh = try! MeshResource.generate(from: [descriptor])
+            } else {
+                // Generate and replace the current mesh
+                let mesh = try! MeshResource.generate(from: [descriptor])
+                try! model.mesh.replace(with: mesh.contents)
+            }
             
-            try! model.mesh.replace(with: mesh.contents)
         }
     }
 }
