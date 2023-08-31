@@ -26,10 +26,16 @@ struct ReplaceMeshReproApp: App {
         ImmersiveSpace(id: "ImmersiveSpace") {
             RealityView { content in
                 let entity = ModelEntity(mesh: .generateBox(size: 1.0), materials: [PhysicallyBasedMaterial()])
-                entity.components.set(DynamicMeshComponent())
                 entity.transform.translation = [0, 1, -2]
+                entity.components.set(InputTargetComponent(allowedInputTypes: .all))
+                entity.generateCollisionShapes(recursive: false)
                 content.add(entity)
             }
+            .gesture(TapGesture()
+                .targetedToEntity(where: !.has(DynamicMeshComponent.self))
+                .onEnded { value in
+                    value.entity.components.set(DynamicMeshComponent())
+                })
         }
     }
 }
